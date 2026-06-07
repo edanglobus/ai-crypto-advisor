@@ -81,18 +81,6 @@ npm run dev                   # http://localhost:5173
   back gracefully when an integration key is missing.
 - **Frontend** ([frontend/.env.example](frontend/.env.example)) — `VITE_API_URL`.
 
-## API summary
-
-All routes are under `/api`. Auth uses httpOnly cookies.
-
-| Method | Endpoint | Purpose |
-|--------|----------|---------|
-| POST | `/auth/register` · `/auth/login` · `/auth/logout` · `/auth/refresh` | Auth |
-| GET | `/auth/me` | Current user + onboarding status |
-| GET / PUT | `/preferences` | Read / save onboarding preferences |
-| GET | `/dashboard/market` | Volume, BTC dominance, Fear & Greed |
-| GET | `/dashboard/prices` · `/news` · `/insight` · `/meme` | Dashboard content (`?refresh=true` bypasses cache) |
-| GET / POST | `/feedback` | Read / cast section votes |
 
 ## Deployment
 
