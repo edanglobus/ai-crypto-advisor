@@ -1,5 +1,6 @@
 # AI Crypto Advisor
 
+APP URL - https://ai-crypto-advisor-ten.vercel.app/
 A personalized crypto dashboard: users sign up, take a short onboarding quiz, and
 get a daily, tailored dashboard — live coin prices, market news, an AI insight of
 the day, and a fun meme — with thumbs up/down feedback on each section.
