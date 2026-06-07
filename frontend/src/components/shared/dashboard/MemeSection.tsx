@@ -8,7 +8,7 @@ import { RefreshButton } from '../../ui/RefreshButton';
 import { SectionFeedback } from '../../ui/SectionFeedback';
 
 export function MemeSection() {
-  const { data, isLoading, isError, isFetching, refetch, dataUpdatedAt } = useMeme();
+  const { data, isLoading, isError, isFetching, refetch } = useMeme();
   const [imageError, setImageError] = useState(false);
 
   const reroll = () => {
@@ -44,7 +44,7 @@ export function MemeSection() {
               {data.title}
             </figcaption>
           </figure>
-          <SectionFeedback key={dataUpdatedAt} contentType="MEME" />
+          <SectionFeedback contentType="MEME" contentRef={data.id} />
         </>
       )}
     </NewsletterSection>

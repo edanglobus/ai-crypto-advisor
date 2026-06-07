@@ -6,7 +6,7 @@ import { RefreshButton } from '../../ui/RefreshButton';
 import { SectionFeedback } from '../../ui/SectionFeedback';
 
 export function InsightSection() {
-  const { data, isLoading, isError, isFetching, refetch, refresh, dataUpdatedAt } = useInsight();
+  const { data, isLoading, isError, isFetching, refetch, refresh } = useInsight();
 
   const action = (
     <div className="flex items-center gap-2">
@@ -39,7 +39,7 @@ export function InsightSection() {
               — {data.insight.model}
             </cite>
           </blockquote>
-          <SectionFeedback key={dataUpdatedAt} contentType="AI_INSIGHT" />
+          <SectionFeedback contentType="AI_INSIGHT" contentRef={data.insight.id} />
         </>
       )}
     </NewsletterSection>

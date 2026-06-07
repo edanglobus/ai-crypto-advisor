@@ -7,7 +7,8 @@ import { RefreshButton } from '../../ui/RefreshButton';
 import { SectionFeedback } from '../../ui/SectionFeedback';
 
 export function PricesSection() {
-  const { data, isLoading, isError, isFetching, refetch, refresh, dataUpdatedAt } = usePrices();
+  const { data, isLoading, isError, isFetching, refetch, refresh } = usePrices();
+  const contentRef = `prices-${new Date().toISOString().slice(0, 10)}`;
 
   return (
     <NewsletterSection
@@ -31,7 +32,7 @@ export function PricesSection() {
               <PriceRow key={price.id} price={price} />
             ))}
           </div>
-          <SectionFeedback key={dataUpdatedAt} contentType="PRICES" />
+          <SectionFeedback contentType="PRICES" contentRef={contentRef} />
         </>
       )}
     </NewsletterSection>
