@@ -1,12 +1,12 @@
 import { ContentType, VoteType } from '@prisma/client';
 import { z } from 'zod';
 
-// A vote on a specific dashboard item. contentRef is the item's id from the
-// dashboard endpoints (coin id, news id, `insight-YYYY-MM-DD`, or meme id).
+// A vote on a dashboard section, with a snapshot of what was shown at the time
+// (coins, headlines, insight/meme info, shownAt timestamp).
 export const castVoteSchema = z.object({
   contentType: z.nativeEnum(ContentType),
-  contentRef: z.string().trim().min(1, 'contentRef is required').max(200),
   vote: z.nativeEnum(VoteType),
+  context: z.record(z.unknown()).optional(),
 });
 
 export type CastVoteInput = z.infer<typeof castVoteSchema>;

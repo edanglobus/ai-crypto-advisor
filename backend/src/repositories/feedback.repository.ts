@@ -1,14 +1,14 @@
-import { ContentType, Feedback, VoteType } from '@prisma/client';
+import { ContentType, Feedback, Prisma, VoteType } from '@prisma/client';
 
 import { prisma } from '../lib/prisma';
 
 export const feedbackRepository = {
-  // Append-only: each vote is stored as its own row.
+  // Append-only: each vote is stored as its own row with a context snapshot.
   create(data: {
     userId: string;
     contentType: ContentType;
-    contentRef: string;
     vote: VoteType;
+    context?: Prisma.InputJsonValue;
   }): Promise<Feedback> {
     return prisma.feedback.create({ data });
   },
