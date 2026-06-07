@@ -19,8 +19,8 @@ export function DashboardPage() {
   const sections = new Set(prefs?.contentPreferences ?? []);
 
   return (
-    <div className="min-h-screen bg-[#f5f5f7]">
-      <FadeIn className="mx-auto min-h-screen w-full max-w-5xl bg-white px-6 py-12 shadow-card sm:px-16 lg:px-20">
+    <div className="min-h-screen">
+      <FadeIn className="mx-auto min-h-screen w-full max-w-5xl border-x border-white/60 bg-white/70 px-6 py-12 shadow-card backdrop-blur-xl sm:px-16 lg:px-20">
         <NewsletterMasthead />
         {/* Market Overview and Coin Prices always show. */}
         <MarketSection />

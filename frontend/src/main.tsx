@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { App } from './App';
 import { AuthProvider } from './components/shared/AuthProvider';
+import { BackgroundLogo } from './components/ui/BackgroundLogo';
 import './index.css';
 
 const queryClient = new QueryClient({
@@ -25,6 +26,7 @@ createRoot(rootElement).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
+        <BackgroundLogo />
         <AuthProvider>
           <App />
         </AuthProvider>
