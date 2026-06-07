@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------- Enums ----------
+
+// Onboarding Q2 — "What type of investor are you?"
+enum InvestorType {
+  HODLER
+  DAY_TRADER
+  NFT_COLLECTOR
+}
+
+// The four dashboard sections — used both for onboarding section choices
+// (Q3: "which sections do you want to see?") and for voting.
+enum ContentType {
+  NEWS
+  PRICES
+  AI_INSIGHT
+  MEME
+}
+
+enum VoteType {
+  UP
+  DOWN
+}
+
+// ---------- Models ----------
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  preference    UserPreference?
+  feedbacks     Feedback[]
+  refreshTokens RefreshToken[]
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String    @id @default(uuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String    @unique // sha256 of the raw refresh token (raw token only lives in the cookie)
+  expiresAt DateTime
+  revokedAt DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([userId])
+  @@map("refresh_tokens")
+}
+
+model UserPreference {
+  id     String @id @default(uuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Onboarding quiz answers (assignment's three questions).
+  favoriteCoins      String[] // Q1 - crypto assets of interest (e.g. coin ids)
+  investorType       InvestorType // Q2 - type of investor
+  contentPreferences ContentType[] // Q3 - which dashboard sections to show
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("user_preferences")
+}
+
+model Feedback {
+  id     String @id @default(uuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  contentType ContentType
+  contentRef  String // external id of the voted item (article id / coin id / insight id / meme id)
+  vote        VoteType
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, contentType, contentRef]) // one vote per user per content item
+  @@index([userId])
+  @@map("feedbacks")
+}
