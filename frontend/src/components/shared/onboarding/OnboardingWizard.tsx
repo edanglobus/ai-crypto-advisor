@@ -87,7 +87,7 @@ export function OnboardingWizard() {
         <p className="mt-1 text-sm text-slate-500">Let&apos;s personalize your dashboard</p>
       </div>
 
-      <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-card sm:p-8">
+      <div className="rounded-3xl border border-white/60 bg-white/70 p-6 shadow-card backdrop-blur-xl sm:p-8">
         <Stepper steps={STEPS} current={step} />
 
         <div className="mt-8">

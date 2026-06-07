@@ -90,8 +90,8 @@ export function SettingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f5f5f7] px-4 py-10">
-      <FadeIn className="mx-auto max-w-2xl rounded-3xl border border-slate-200 bg-white px-6 py-10 shadow-card sm:px-10">
+    <div className="min-h-screen px-4 py-10">
+      <FadeIn className="mx-auto max-w-2xl rounded-3xl border border-white/60 bg-white/70 px-6 py-10 shadow-card backdrop-blur-xl sm:px-10">
         <div className="mb-8">
           <h1 className="font-serif text-3xl font-bold tracking-tight text-slate-900">Settings</h1>
           <p className="mt-1 text-sm text-slate-500">Update your preferences anytime.</p>
