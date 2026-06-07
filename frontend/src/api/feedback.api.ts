@@ -7,7 +7,7 @@ export interface Feedback {
   id: string;
   userId: string;
   contentType: ContentType;
-  contentRef: string;
+  context: unknown; // snapshot of what was shown
   vote: VoteType;
   createdAt: string;
   updatedAt: string;
@@ -15,8 +15,8 @@ export interface Feedback {
 
 export interface CastVotePayload {
   contentType: ContentType;
-  contentRef: string;
   vote: VoteType;
+  context?: Record<string, unknown>;
 }
 
 export const feedbackApi = {

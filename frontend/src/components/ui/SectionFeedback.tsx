@@ -6,12 +6,12 @@ import { VoteButtons } from './VoteButtons';
 
 interface SectionFeedbackProps {
   contentType: ContentType;
-  contentRef: string;
+  context?: Record<string, unknown>;
 }
 
-// "Helpful? 👍 👎" for a section. Each click is recorded (append-only); the button
-// shows a brief thanks, then resets to neutral so more feedback can be given.
-export function SectionFeedback({ contentType, contentRef }: SectionFeedbackProps) {
+// "Helpful? 👍 👎" for a section. Each click is recorded (append-only) with a
+// snapshot of what was shown; the button shows a brief thanks, then resets.
+export function SectionFeedback({ contentType, context }: SectionFeedbackProps) {
   const vote = useVote();
   const [thanks, setThanks] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout>>();
@@ -19,7 +19,7 @@ export function SectionFeedback({ contentType, contentRef }: SectionFeedbackProp
   useEffect(() => () => clearTimeout(timer.current), []);
 
   const handleVote = (value: VoteType) => {
-    vote.mutate({ contentType, contentRef, vote: value });
+    vote.mutate({ contentType, vote: value, context });
     setThanks(true);
     clearTimeout(timer.current);
     timer.current = setTimeout(() => setThanks(false), 1500);
