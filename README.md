@@ -94,6 +94,12 @@ All routes are under `/api`. Auth uses httpOnly cookies.
 | GET | `/dashboard/prices` · `/news` · `/insight` · `/meme` | Dashboard content (`?refresh=true` bypasses cache) |
 | GET / POST | `/feedback` | Read / cast section votes |
 
+## Deployment
+
+Frontend on **Vercel**, backend + PostgreSQL on **Render** (via
+[`render.yaml`](render.yaml) + [`frontend/vercel.json`](frontend/vercel.json)).
+Full step-by-step in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
+
 ## Docs
 
 - [docs/AI_USAGE.md](docs/AI_USAGE.md) — how AI tooling was used to build this.

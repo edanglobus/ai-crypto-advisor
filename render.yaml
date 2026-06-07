@@ -1,0 +1,44 @@
+# Render Blueprint — backend web service + PostgreSQL.
+# Deploy: Render Dashboard → New → Blueprint → pick this repo.
+# After it's live, set FRONTEND_URL (and any API keys) and redeploy.
+services:
+  - type: web
+    name: ai-crypto-advisor-api
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install && npx prisma generate && npm run build
+    startCommand: npx prisma migrate deploy && node dist/server.js
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ai-crypto-advisor-db
+          property: connectionString
+      - key: JWT_ACCESS_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: ACCESS_TOKEN_TTL
+        value: 15m
+      - key: REFRESH_TOKEN_TTL
+        value: 7d
+      # Set to your deployed Vercel URL (e.g. https://ai-crypto-advisor.vercel.app)
+      - key: FRONTEND_URL
+        sync: false
+      # Optional integration keys — set in the dashboard; app falls back if blank.
+      - key: COINGECKO_API_KEY
+        sync: false
+      - key: CRYPTOPANIC_API_KEY
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: OPENROUTER_MODEL
+        value: meta-llama/llama-3.3-70b-instruct:free
+
+databases:
+  - name: ai-crypto-advisor-db
+    plan: free
+    databaseName: crypto_advisor
