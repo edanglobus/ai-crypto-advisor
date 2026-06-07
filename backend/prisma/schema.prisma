@@ -82,7 +82,7 @@ model Feedback {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   contentType ContentType
-  contentRef  String // external id of the voted item (article id / coin id / insight id / meme id)
+  context     Json? // snapshot of what was shown (coins/headlines/insight/meme + shownAt)
   vote        VoteType
 
   createdAt DateTime @default(now())
@@ -90,6 +90,6 @@ model Feedback {
 
   // Append-only event log: every vote is a new row (no uniqueness).
   @@index([userId])
-  @@index([userId, contentType, contentRef])
+  @@index([userId, contentType])
   @@map("feedbacks")
 }

@@ -39,7 +39,15 @@ export function InsightSection() {
               — {data.insight.model}
             </cite>
           </blockquote>
-          <SectionFeedback contentType="AI_INSIGHT" contentRef={data.insight.id} />
+          <SectionFeedback
+            contentType="AI_INSIGHT"
+            context={{
+              insightId: data.insight.id,
+              model: data.insight.model,
+              text: data.insight.text,
+              shownAt: new Date().toISOString(),
+            }}
+          />
         </>
       )}
     </NewsletterSection>

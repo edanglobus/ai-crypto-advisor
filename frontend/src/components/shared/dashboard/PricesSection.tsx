@@ -8,7 +8,6 @@ import { SectionFeedback } from '../../ui/SectionFeedback';
 
 export function PricesSection() {
   const { data, isLoading, isError, isFetching, refetch, refresh } = usePrices();
-  const contentRef = `prices-${new Date().toISOString().slice(0, 10)}`;
 
   return (
     <NewsletterSection
@@ -32,7 +31,13 @@ export function PricesSection() {
               <PriceRow key={price.id} price={price} />
             ))}
           </div>
-          <SectionFeedback contentType="PRICES" contentRef={contentRef} />
+          <SectionFeedback
+            contentType="PRICES"
+            context={{
+              coins: data.map((p) => ({ id: p.id, symbol: p.symbol, price: p.price })),
+              shownAt: new Date().toISOString(),
+            }}
+          />
         </>
       )}
     </NewsletterSection>

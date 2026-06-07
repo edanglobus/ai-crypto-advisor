@@ -8,7 +8,6 @@ import { SectionFeedback } from '../../ui/SectionFeedback';
 
 export function NewsSection() {
   const { data, isLoading, isError, isFetching, refetch, refresh } = useNews();
-  const contentRef = `news-${new Date().toISOString().slice(0, 10)}`;
 
   const action = (
     <div className="flex items-center gap-2">
@@ -40,7 +39,13 @@ export function NewsSection() {
               <NewsRow key={item.id} item={item} />
             ))}
           </div>
-          <SectionFeedback contentType="NEWS" contentRef={contentRef} />
+          <SectionFeedback
+            contentType="NEWS"
+            context={{
+              headlines: data.news.map((n) => ({ id: n.id, title: n.title, source: n.source })),
+              shownAt: new Date().toISOString(),
+            }}
+          />
         </>
       )}
     </NewsletterSection>

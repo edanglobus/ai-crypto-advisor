@@ -44,7 +44,10 @@ export function MemeSection() {
               {data.title}
             </figcaption>
           </figure>
-          <SectionFeedback contentType="MEME" contentRef={data.id} />
+          <SectionFeedback
+            contentType="MEME"
+            context={{ memeId: data.id, title: data.title, shownAt: new Date().toISOString() }}
+          />
         </>
       )}
     </NewsletterSection>
