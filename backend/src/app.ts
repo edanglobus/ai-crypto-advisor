@@ -2,7 +2,7 @@ import express, { Express } from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
-import { env } from './config/env';
+import { env, isProd } from './config/env';
 import { authRoutes } from './routes/auth.routes';
 import { preferenceRoutes } from './routes/preference.routes';
 import { dashboardRoutes } from './routes/dashboard.routes';
@@ -11,6 +11,12 @@ import { errorHandler, notFoundHandler } from './middlewares/error.middleware';
 
 export function createApp(): Express {
   const app = express();
+
+  // Behind Render/Heroku-style TLS proxies, trust the proxy so Secure cookies
+  // are set and req.protocol is correct in production.
+  if (isProd) {
+    app.set('trust proxy', 1);
+  }
 
   app.use(
     cors({
