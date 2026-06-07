@@ -1,58 +1,49 @@
-# How feedback could improve the app over time (bonus)
+# Using feedback to improve the app (bonus)
 
-A short suggestion on how the stored feedback could improve **the app's
-recommendation model** — i.e. how the advisor decides what to show each user
-(which coins, which news, what kind of insight, which memes). This is the future
-direction, not implemented.
+This is my idea for how the like and dislike buttons could help the app give
+better suggestions over time. I haven't built it yet, this is just the plan.
 
-## How feedback is stored
+When I say "the app's model" I mean how the app chooses what to show each user:
+which coins, which news, what kind of insight, and which meme. Right now it only
+uses the answers from the onboarding quiz. Feedback would let it learn what people
+actually like.
 
-Every thumbs up/down is appended to the `Feedback` table as its own row (an
-event log — nothing is overwritten or deleted), capturing:
+## What I save for each vote
 
-- **who** voted (`userId`)
-- **which section** (`contentType`: news, prices, AI insight, or meme)
-- **the specific content the user saw** (`context` JSON) — the actual coins,
-  headlines, the insight text, or the meme — plus a `shownAt` timestamp
-- **the vote** (up/down) and **when** (`createdAt`)
+Every like or dislike is saved as its own row in the Feedback table, and I never
+change or remove them. For each vote I keep:
 
-Combined with `UserPreference` (their coins, investor type, chosen sections),
-each vote is a complete labeled example: *this user liked / didn't like this
-exact content.*
+who voted, which section it was (prices, news, AI insight, or meme), what they
+actually saw (I save the real content in a context field, so the coins, the
+headlines, the insight text, or the meme, plus the time), and the vote itself.
 
-**Key improvement — save the specific content the user liked.** Storing the
-content itself in `context` (not just a short reference id) means the app can
-learn from the real items a user upvoted/downvoted — the exact insight text,
-headlines, or coins they reacted to — which is far more useful than an id that
-may change or disappear over time.
+So every vote becomes a clear example: this user liked or didn't like this exact
+content.
 
-## How the app's recommendation model would improve
+Saving the real content is the important part. Because I keep what was really
+shown and not just an id, the app can later learn from the actual things people
+liked, like the exact insight or headline, instead of an id that might change or
+go away.
 
-The "model" here is the app's personalization logic — what it chooses to show —
-which today is driven only by the onboarding preferences. Feedback lets it adapt:
+## How I would use it
 
-1. **Tune what each user sees (no training).** Use a user's upvotes to bias the
-   dashboard toward the content and tone they like, and steer the AI insight
-   prompt with examples of insights they upvoted (and away from downvoted ones).
-2. **Personalized ranking.** Rank news, coins, and memes by what the user — and
-   users with similar preferences — upvoted, instead of newest/random. This
-   ordering *is* the core of the advisor's recommendation model.
-3. **A preference profile per user/segment.** As votes accumulate, build a profile
-   of what each segment likes (topics, coins, insight style) and feed it back into
-   the dashboard's selection logic, so recommendations get better the more the
-   user interacts.
+1. Show more of what they like. I can use a person's likes to push the dashboard
+   and the AI insight toward the things they enjoyed, and away from what they
+   disliked. This needs no training at all.
+2. Order things by what people like. I can sort the news, coins, and memes by what
+   the user and people with similar taste liked, instead of just newest or random.
+   This ordering is really the heart of the suggestions.
+3. Learn their taste over time. As votes add up, I can keep a simple profile of
+   what each kind of user likes and use it to choose what to show, so it keeps
+   getting better the more they use the app.
 
-## The loop
+## The cycle
 
-```
-collect votes → build a dataset → update the recommendation model
-   → test against past votes → try on real users → keep what wins → repeat
-```
+It works as a cycle: collect votes, look at what people liked, change what the app
+shows, check it against past votes, try it on real users, keep what works, and
+repeat. New users start from their quiz answers until there are enough votes.
 
-New users with no votes fall back on their onboarding preferences until enough
-feedback builds up.
-
-A couple of cautions: feedback is sparse, so I'd group similar users; and since
-it's finance, recommendations shouldn't be pushed toward hype without a safety
-check. Privacy-wise, account deletion already cascades to remove a user's
-feedback.
+A few things to keep in mind. There usually aren't many votes, so I would group
+similar users together. It's about money, so feedback shouldn't push the app
+toward hype without a sanity check. And if someone deletes their account, their
+feedback is removed too.
