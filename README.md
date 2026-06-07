@@ -101,6 +101,38 @@ PostgreSQL on **Render** via the [`render.yaml`](render.yaml) blueprint (set
 `FRONTEND_URL` + any API keys). SPA routing handled by
 [`frontend/vercel.json`](frontend/vercel.json).
 
+## Database access (read-only)
+
+A **read-only** PostgreSQL user is provided for reviewing the data (`users`,
+`user_preferences`, `feedback`, `refresh_tokens`). Connect with any Postgres
+client — DBeaver, TablePlus, or `psql`. **SSL is required.**
+
+Connection URL:
+
+```
+postgresql://reviewer:ReadOnly_2026!@dpg-d8iihs4m0tmc73blij70-a.oregon-postgres.render.com:5432/crypto_advisor_s980?sslmode=require
+```
+
+Or by fields:
+
+| Field | Value |
+|---|---|
+| Host | `dpg-d8iihs4m0tmc73blij70-a.oregon-postgres.render.com` |
+| Port | `5432` |
+| Database | `crypto_advisor_s980` |
+| Username | `reviewer` |
+| Password | `ReadOnly_2026!` |
+| SSL mode | `require` |
+
+`psql` example:
+
+```bash
+psql "postgresql://reviewer:ReadOnly_2026!@dpg-d8iihs4m0tmc73blij70-a.oregon-postgres.render.com:5432/crypto_advisor_s980?sslmode=require"
+```
+
+> The `reviewer` role has `SELECT`-only access. Hosted on Render's free tier, which
+> may be removed ~90 days after creation.
+
 ## Docs
 
 - [docs/AI_USAGE.md](docs/AI_USAGE.md) — how AI tooling was used to build this.
