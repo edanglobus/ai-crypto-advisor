@@ -1,0 +1,16 @@
+# Dependencies / build output (also covered per-package, listed here defensively)
+node_modules/
+dist/
+dist-ssr/
+
+# Environment files (never commit secrets)
+.env
+.env.local
+*.local
+
+# Logs / OS
+*.log
+.DS_Store
+
+# Internal commit-tracking notes (not part of the repo)
+commit-tracker.md
