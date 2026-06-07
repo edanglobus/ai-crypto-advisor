@@ -96,9 +96,10 @@ All routes are under `/api`. Auth uses httpOnly cookies.
 
 ## Deployment
 
-Frontend on **Vercel**, backend + PostgreSQL on **Render** (via
-[`render.yaml`](render.yaml) + [`frontend/vercel.json`](frontend/vercel.json)).
-Full step-by-step in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
+Frontend on **Vercel** (root dir `frontend`, set `VITE_API_URL`); backend +
+PostgreSQL on **Render** via the [`render.yaml`](render.yaml) blueprint (set
+`FRONTEND_URL` + any API keys). SPA routing handled by
+[`frontend/vercel.json`](frontend/vercel.json).
 
 ## Docs
 
