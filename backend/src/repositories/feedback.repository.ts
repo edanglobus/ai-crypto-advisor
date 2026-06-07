@@ -3,16 +3,7 @@ import { ContentType, Feedback, VoteType } from '@prisma/client';
 import { prisma } from '../lib/prisma';
 
 export const feedbackRepository = {
-  findByUserAndContent(
-    userId: string,
-    contentType: ContentType,
-    contentRef: string,
-  ): Promise<Feedback | null> {
-    return prisma.feedback.findUnique({
-      where: { userId_contentType_contentRef: { userId, contentType, contentRef } },
-    });
-  },
-
+  // Append-only: each vote is stored as its own row.
   create(data: {
     userId: string;
     contentType: ContentType;
@@ -22,15 +13,7 @@ export const feedbackRepository = {
     return prisma.feedback.create({ data });
   },
 
-  updateVote(id: string, vote: VoteType): Promise<Feedback> {
-    return prisma.feedback.update({ where: { id }, data: { vote } });
-  },
-
-  async deleteById(id: string): Promise<void> {
-    await prisma.feedback.delete({ where: { id } });
-  },
-
   findByUser(userId: string): Promise<Feedback[]> {
-    return prisma.feedback.findMany({ where: { userId }, orderBy: { updatedAt: 'desc' } });
+    return prisma.feedback.findMany({ where: { userId }, orderBy: { createdAt: 'desc' } });
   },
 };

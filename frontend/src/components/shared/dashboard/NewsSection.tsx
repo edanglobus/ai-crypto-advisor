@@ -7,7 +7,8 @@ import { RefreshButton } from '../../ui/RefreshButton';
 import { SectionFeedback } from '../../ui/SectionFeedback';
 
 export function NewsSection() {
-  const { data, isLoading, isError, isFetching, refetch, refresh, dataUpdatedAt } = useNews();
+  const { data, isLoading, isError, isFetching, refetch, refresh } = useNews();
+  const contentRef = `news-${new Date().toISOString().slice(0, 10)}`;
 
   const action = (
     <div className="flex items-center gap-2">
@@ -39,7 +40,7 @@ export function NewsSection() {
               <NewsRow key={item.id} item={item} />
             ))}
           </div>
-          <SectionFeedback key={dataUpdatedAt} contentType="NEWS" />
+          <SectionFeedback contentType="NEWS" contentRef={contentRef} />
         </>
       )}
     </NewsletterSection>
