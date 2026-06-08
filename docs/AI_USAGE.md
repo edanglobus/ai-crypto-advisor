@@ -15,7 +15,7 @@ before moving on.
 How I actually approached the problem, before and during the build:
 
 - **Read the brief, then map it to pieces.** I broke the assignment into a clear
-  order — data model, then auth, then onboarding, then the data sources, then the
+  order - data model, then auth, then onboarding, then the data sources, then the
   dashboard and voting. Each one depends on the one before it, so building in that
   order meant I was never blocked or guessing.
 - **Get the foundation right first.** I spent the most care on the database schema,
@@ -25,7 +25,7 @@ How I actually approached the problem, before and during the build:
   touching styling. The UI came last and went through a few rounds - I'd run the
   app, see how it felt, and adjust, instead of designing it perfectly up front.
 - **Decide on trade-offs, not defaults.** For each choice I asked "what does this
-  cost vs. what does it buy?" — proper cookie auth was more work but felt right;
+  cost vs. what does it buy?" - proper cookie auth was more work but felt right;
   extra coins and sections felt like clutter, so I cut them.
 - **When in doubt, simplify.** A few times it got more complex than it needed to be,
   and my instinct was to remove things (fewer coins, less animation, drop unused
@@ -43,7 +43,7 @@ How I actually approached the problem, before and during the build:
 | 4 | External APIs (CoinGecko, CryptoPanic, OpenRouter) | ✅ |
 | 5 | Dashboard + thumbs up/down voting | ✅ |
 | 6 | Write-up on using feedback to improve the model (bonus) | ✅ |
-| 7 | Deployment config | ⬜ |
+| 7 | Deployment config | ✅ |
 
 **Database first.** I started with the schema because everything depends on it. I
 chose UUID ids and a unique vote-per-item rule so voting could be a clean
